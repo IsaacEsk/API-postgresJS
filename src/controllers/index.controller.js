@@ -8,6 +8,12 @@ const pool = new Pool({
     port: '5432'
 });
 
+const getCasas = async (req, res) => {
+    const response = await pool.query('SELECT idcasa,direccion FROM casas');
+    res.status(200).json(response.rows);
+};
+
+
 const getUsers = async (req, res) => {
     const response = await pool.query('SELECT * FROM casas');
     res.status(200).json(response.rows);
@@ -51,6 +57,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+    getCasas,
     getUsers,
     getUserById,
     createUser,
