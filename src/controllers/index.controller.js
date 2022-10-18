@@ -13,6 +13,12 @@ const getCasas = async (req, res) => {
     res.status(200).json(response.rows);
 };
 
+const getInvitaciones = async (req, res) => {
+    const id = parseInt(req.params.id);
+    //console.log(id);
+    const response = await pool.query('select nombre, auto, activo from residentes where idcasa = $1', [id]);
+    res.json(response.rows);
+};
 
 const getUsers = async (req, res) => {
     const response = await pool.query('SELECT * FROM casas');
@@ -57,10 +63,11 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+    getInvitaciones,
     getCasas,
     getUsers,
     getUserById,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
 };
