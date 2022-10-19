@@ -20,6 +20,16 @@ const getInvitaciones = async (req, res) => {
     res.json(response.rows);
 };
 
+const updateInvitacion = async (req, res) => {
+    const idresidente = parseInt(req.params.id);
+    const  activo   = parseInt(req.params.activo);
+    const response =await pool.query('update residentes set activo = $1 where idresidente = $2', [
+        activo,
+        idresidente,
+    ]);
+    res.json('User Updated Successfully');
+};
+
 const getUsers = async (req, res) => {
     const response = await pool.query('SELECT * FROM casas');
     res.status(200).json(response.rows);
@@ -66,6 +76,7 @@ module.exports = {
     getInvitaciones,
     getCasas,
     getUsers,
+    updateInvitacion,
     getUserById,
     createUser,
     updateUser,
