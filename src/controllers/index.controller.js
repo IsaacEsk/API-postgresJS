@@ -16,7 +16,7 @@ const getCasas = async (req, res) => {
 const getInvitaciones = async (req, res) => {
     const id = parseInt(req.params.id);
     //console.log(id);
-    const response = await pool.query('select nombre, auto, activo from residentes where idcasa = $1', [id]);
+    const response = await pool.query('select idresidente,nombre, auto, activo from residentes where idcasa = $1', [id]);
     res.json(response.rows);
 };
 
