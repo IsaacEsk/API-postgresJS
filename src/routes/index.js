@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 
-const {getCasas, getUsers, getUserById, createUser, updateUser, deleteUser,getInvitaciones, updateInvitacion } = require('../controllers/index.controller');
+const {getCasas, getUsers, getUserById, createUser, updateUser, deleteUser,getInvitaciones, updateInvitacion, updateContrasena} = require('../controllers/index.controller');
 
 ///Estas si las uso 
 router.get('/api/casas', getCasas);
 router.get('/api/invitaciones/:id', getInvitaciones);
 router.put('/api/setinvitacion/:id/:activo', updateInvitacion);
+router.put('/api/setcontrasena/:id/:contrasena', updateContrasena);
 
 ///Estas fueron de prueba
 router.get('/users', getUsers);

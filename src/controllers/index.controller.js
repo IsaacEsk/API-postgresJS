@@ -27,7 +27,17 @@ const updateInvitacion = async (req, res) => {
         activo,
         idresidente,
     ]);
-    res.json('User Updated Successfully');
+    res.json('Invitacion Updated Successfully');
+};
+
+const updateContrasena = async (req, res) => {
+    const idcasa = parseInt(req.params.id);
+    const  contrasena   = parseInt(req.params.contrasena);
+    const response =await pool.query('update casas set tel = $1 where idcasa = $2', [
+        contrasena,
+        idcasa,
+    ]);
+    res.json('Contraseña Updated Successfully');
 };
 
 const getUsers = async (req, res) => {
@@ -73,10 +83,12 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+
     getInvitaciones,
     getCasas,
     getUsers,
     updateInvitacion,
+    updateContrasena,
     getUserById,
     createUser,
     updateUser,
