@@ -4,40 +4,48 @@ const pool = new Pool({
     user: 'eskayserserver',
     host: 'eskayserinstance.c6db7loydwmu.us-east-2.rds.amazonaws.com',
     password: 'eska1ser',
-    database: 'datospk',
+    database: 'imeublepk',
     port: '5432'
 });
 
 const getCasas = async (req, res) => {
-    const response = await pool.query('SELECT idcasa,direccion FROM casas');
+    const idedificio = parseInt(req.params.idedificio);
+    const response = await pool.query('select * from departamentos where activo = 1 and idedificio = $1',[idedificio]);
     res.status(200).json(response.rows);
 };
 
 const getInvitaciones = async (req, res) => {
-    const id = parseInt(req.params.id);
+    const idcasa = parseInt(req.params.idcasa);
+    const idedificio = parseInt(req.params.idedificio);
+    const limit = parseInt(req.params.limit);
     //console.log(id);
-    const response = await pool.query('select idresidente,nombre, auto, activo from residentes where idcasa = $1', [id]);
+    const response = await pool.query('select * from visitantes where iddepa = $1 and idedificio = $2 order by estatus, fecha LIMIT $3', [idcasa,idedificio,limit]);
     res.json(response.rows);
 };
 
 const updateInvitacion = async (req, res) => {
     const idresidente = parseInt(req.params.id);
-    const  activo   = parseInt(req.params.activo);
-    const response =await pool.query('update residentes set activo = $1 where idresidente = $2', [
-        activo,
+    const  estatus   = parseInt(req.params.estatus);
+    // console.log(idresidente);
+    // console.log(estatus);
+    const response =await pool.query('update visitantes set estatus = $1 where id = $2', [
+        estatus,
         idresidente,
     ]);
-    res.json('Invitacion Updated Successfully');
+    res.json('1');
 };
 
 const updateContrasena = async (req, res) => {
     const idcasa = parseInt(req.params.id);
-    const  contrasena   = parseInt(req.params.contrasena);
-    const response =await pool.query('update casas set tel = $1 where idcasa = $2', [
+    const  contrasena   = req.params.contrasena;
+    console.log(idcasa);
+    console.log(contrasena);
+    
+    const response =await pool.query('update departamentos set password = $1 where id = $2', [
         contrasena,
         idcasa,
     ]);
-    res.json('Contraseña Updated Successfully');
+    res.json('1');
 };
 
 const getUsers = async (req, res) => {
