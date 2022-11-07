@@ -19,7 +19,7 @@ const getInvitaciones = async (req, res) => {
     const idedificio = parseInt(req.params.idedificio);
     const limit = parseInt(req.params.limit);
     //console.log(id);
-    const response = await pool.query('select * from visitantes where iddepa = $1 and idedificio = $2 order by estatus, fecha LIMIT $3', [idcasa,idedificio,limit]);
+    const response = await pool.query('select * from visitantes where iddepa = $1 and idedificio = $2 order by estatus, fecha ASC LIMIT $3', [idcasa,idedificio,limit]);
     res.json(response.rows);
 };
 
