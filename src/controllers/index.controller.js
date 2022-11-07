@@ -10,7 +10,7 @@ const pool = new Pool({
 
 const getCasas = async (req, res) => {
     const idedificio = parseInt(req.params.idedificio);
-    const response = await pool.query('select * from departamentos where activo = 1 and idedificio = $1',[idedificio]);
+    const response = await pool.query('select * from departamentos where activo = 1 and idedificio = $1 order by nombre',[idedificio]);
     res.status(200).json(response.rows);
 };
 
